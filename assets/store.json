@@ -1,0 +1,66 @@
+[
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000",
+        "family": "keyboard",
+        "name": "SL-RGB",
+        "amountAvailable": 150,
+        "amountSold": 0,
+        "price": 60
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc001",
+        "family": "keyboard",
+        "name": "SL-TKL",
+        "amountAvailable": 90,
+        "amountSold": 0,
+        "price": 100
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc002",
+        "family": "mouse",
+        "name": "SL-Wireless",
+        "amountAvailable": 190,
+        "amountSold": 0,
+        "price": 50
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc003",
+        "family": "mouse",
+        "name": "SL-Wireless-Pro",
+        "amountAvailable": 40,
+        "amountSold": 0,
+        "price": 70
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc004",
+        "family": "webcam",
+        "name": "SL-HD",
+        "amountAvailable": 300,
+        "amountSold": 0,
+        "price": 50
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc005",
+        "family": "webcam",
+        "name": "SL-4k",
+        "amountAvailable": 100,
+        "amountSold": 0,
+        "price": 70
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc006",
+        "family": "microphone",
+        "name": "SL-XLR",
+        "amountAvailable": 20,
+        "amountSold": 0,
+        "price": 50
+    },
+    {
+        "id": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc007",
+        "family": "microphone",
+        "name": "SL-USB-Mic",
+        "amountAvailable": 250,
+        "amountSold": 0,
+        "price": 70
+    }
+]
