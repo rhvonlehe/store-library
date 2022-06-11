@@ -14,10 +14,11 @@ FetchContent_MakeAvailable(json)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(store SHARED)
+target_compile_features(store PRIVATE cxx_std_17)
 
 target_sources(store
     PRIVATE
-    store.cpp
+    Store.cpp
 )
 
 target_link_libraries(store
