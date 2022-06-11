@@ -1,7 +1,37 @@
-#include <iostream>
+#include "Store.h"
+#include "OSMutex.h"
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 using namespace std;
-void test(void)
+using namespace nlohmann;
+
+struct Store::Impl
 {
-    cout << "test call" << endl;
+    json model;
+};
+
+Store::Store(void)
+    : pimpl(make_unique<Impl>())
+{
+
+}
+
+vector<string> Store::getProductFamilies(void)
+{
+    readIn();
+
+
+}
+
+
+
+void Store::readIn(void)
+{
+    OSMutex mutex(_mutexName);
+    ifstream i(_storeFile);
+
+    i >> pimpl->model;
+
+
 }
