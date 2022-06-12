@@ -20,6 +20,7 @@ target_sources(store
     PRIVATE
     Store.cpp
     JsonConvertUtils.cpp
+    OSMutex.cpp
 )
 
 target_link_libraries(store

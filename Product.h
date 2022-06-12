@@ -6,7 +6,7 @@
 class Product
 {
 public:
-    Product();
+//    Product();
 
     std::string id;
     std::string family;

@@ -6,6 +6,8 @@
 #include <string>
 
 // This guy is meant to give us RAII
+// Need an OS mutex because clients are separate processes
+// Basic C++ lock_guard<mutex> is only for threads
 class OSMutex
 {
 public:

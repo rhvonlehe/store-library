@@ -46,9 +46,16 @@ Store::Store(void)
 
 vector<string> Store::getProductFamilies(void)
 {
+    vector<string> families;
+
     _pimpl->import();
 
+    for (const auto& mapEntry : _pimpl->products)
+    {
+        families.push_back(mapEntry.first);
+    }
 
+    return families;
 }
 
 
