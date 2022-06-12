@@ -17,7 +17,7 @@ public:
     };
 
     explicit Store(void);
-    virtual ~Store(void) = default;
+    ~Store(void);
 
     std::vector<std::string> getProductFamilies(void);
     Product getProductInfo(std::string productId);
@@ -25,6 +25,7 @@ public:
     std::vector<Product> getProducts(std::string family);
 
 private:
+
     struct Impl;  // PIMPL will prevent bleeding of json outside this class/lib
     std::unique_ptr<Impl>   _pimpl;
 };

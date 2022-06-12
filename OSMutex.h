@@ -16,7 +16,6 @@ public:
 
 private:
     HANDLE _osMutex;
-
 };
 
 #endif // OSMUTEX_H

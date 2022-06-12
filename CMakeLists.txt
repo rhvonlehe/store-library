@@ -11,10 +11,16 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(json)
 
+configure_file(assets/store.json ${CMAKE_BINARY_DIR}/store.json COPYONLY)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(store SHARED)
 target_compile_features(store PRIVATE cxx_std_17)
+
+target_include_directories(store
+    PUBLIC
+    .
+)
 
 target_sources(store
     PRIVATE
@@ -26,4 +32,11 @@ target_sources(store
 target_link_libraries(store
     PRIVATE
     nlohmann_json::nlohmann_json
+)
+
+# Slightly hacky.  A full-fledged library would likely have its own 'finder' file to
+# help a client use find_package() on it.
+set_target_properties(store
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
