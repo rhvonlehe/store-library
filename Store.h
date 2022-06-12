@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <thread>
 
 class Store
 {
@@ -25,6 +26,9 @@ public:
     std::vector<Product> getProductsInFamily(std::string family);
 
 private:
+    void saveReceipt(const Product& product) const;
+
+    std::thread::id _customerId;
 
     struct Impl;  // PIMPL will prevent bleeding of json outside this class/lib
     std::unique_ptr<Impl>   _pimpl;

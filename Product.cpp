@@ -5,13 +5,19 @@ using namespace std;
 
 void Product::print(void)
 {
-    cout << "*** product info ***" << endl;
-    cout << "{" << endl;
-    cout << "   id: " << id << endl;
-    cout << "   family: " << family << endl;
-    cout << "   name: " << name << endl;
-    cout << "   qtyAvail: " << qtyAvail << endl;
-    cout << "   qtySold: " << qtySold << endl;
-    cout << "   price: " << price << endl;
-    cout << "}" << endl;
+    cout << *this << endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Product& p)
+{
+    os << "*** product info ***" << endl;
+    os << "{" << endl;
+    os << "   id: " << p.id << endl;
+    os << "   family: " << p.family << endl;
+    os << "   name: " << p.name << endl;
+    os << "   qtyAvail: " << p.qtyAvail << endl;
+    os << "   qtySold: " << p.qtySold << endl;
+    os << "   price: " << p.price << endl;
+    os << "}" << endl;
+    return os;
 }

@@ -5,6 +5,10 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <chrono>
+#include <time.h>
+#include <iomanip>
+#include <process.h>
 
 using namespace std;
 using namespace nlohmann;
@@ -120,6 +124,7 @@ void Store::Impl::updateModel(const Product& updated)
 Store::Store(void)
     : _pimpl(make_unique<Impl>())
 {
+    _customerId = this_thread::get_id();
 }
 
 Store::~Store(void)
@@ -149,21 +154,28 @@ Product Store::getProductInfo(string productId)
 
 Store::Result Store::purchaseProduct(string productId)
 {
-    OSMutex mutex(_mutexName);
+    Product bought;
 
-    auto imported = _pimpl->importById();
-
-    auto product = imported[productId];
-
-    if (product.qtyAvail < 1)
     {
-        return Store::RESULT_SOLD_OUT;
+        OSMutex mutex(_mutexName);
+
+        auto imported = _pimpl->importById();
+
+        bought = imported[productId];
+
+        if (bought.qtyAvail < 1)
+        {
+            return Store::RESULT_SOLD_OUT;
+        }
+
+        bought.qtyAvail--;
+        bought.qtySold++;
+
+        _pimpl->updateModel(bought);
+        _pimpl->jsonToFile();
     }
 
-    product.qtyAvail--;
-
-    _pimpl->updateModel(product);
-    _pimpl->jsonToFile();
+    saveReceipt(bought);
 
     return Store::RESULT_SUCCESS;
 }
@@ -174,4 +186,21 @@ vector<Product> Store::getProductsInFamily(std::string family)
 
     return imported[family];
 }
+
+void Store::saveReceipt(const Product& product) const
+{
+    stringstream ss;
+    auto nowTimeT = chrono::system_clock::to_time_t(chrono::system_clock::now());
+
+    ss << put_time(localtime(&nowTimeT), "%Y-%m-%d-%X");
+    std::string nowStr = ss.str();
+    std::string receiptName = "receipt-" + product.id + '-' + nowStr;
+    ofstream o(receiptName);
+
+    o << "Purchase made:" << endl;
+    o << "by customer: " << _customerId << endl;
+    o << product << endl;
+    o << "at time: " << nowStr << endl;
+}
+
 

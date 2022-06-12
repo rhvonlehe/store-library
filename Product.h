@@ -2,6 +2,7 @@
 #define PRODUCT_H
 
 #include <string>
+#include <iostream>
 
 class Product
 {
@@ -15,5 +16,8 @@ public:
     uint32_t    qtySold;
     uint32_t    price;
 };
+
+std::ostream& operator<<(std::ostream& os, const Product& p);
+
 
 #endif

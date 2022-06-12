@@ -16,6 +16,7 @@ configure_file(assets/store.json ${CMAKE_BINARY_DIR}/store.json COPYONLY)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(store SHARED)
 target_compile_features(store PRIVATE cxx_std_17)
+target_compile_definitions(store PRIVATE _CRT_SECURE_NO_WARNINGS)
 
 target_include_directories(store
     PUBLIC
