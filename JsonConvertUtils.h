@@ -1,0 +1,10 @@
+#ifndef JSONCONVERTUTILS_H
+#define JSONCONVERTUTILS_H
+
+#include "Product.h"
+#include <nlohmann/json.hpp>
+
+// This is a private header file, not to be part of the library's public interface
+void from_json(const nlohmann::json& j, Product& p);
+
+#endif // JSONCONVERTUTILS_H

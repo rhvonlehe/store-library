@@ -19,6 +19,7 @@ target_compile_features(store PRIVATE cxx_std_17)
 target_sources(store
     PRIVATE
     Store.cpp
+    JsonConvertUtils.cpp
 )
 
 target_link_libraries(store

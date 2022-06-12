@@ -25,17 +25,8 @@ public:
     std::vector<Product> getProducts(std::string family);
 
 private:
-    struct Impl;  // PIMPL will prevent bleeding of json into client
-
-    std::unique_ptr<Impl>   pimpl;
-
-
-    void readIn(void);
-    void writeOut(void) const;
-
-    const char* _storeFile = "store.json";
-    const char* _mutexName = "StoreFileMutex";
-
+    struct Impl;  // PIMPL will prevent bleeding of json outside this class/lib
+    std::unique_ptr<Impl>   _pimpl;
 };
 
 

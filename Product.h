@@ -8,13 +8,12 @@ class Product
 public:
     Product();
 
-private:
     std::string id;
     std::string family;
     std::string name;
     uint32_t    qtyAvail;
     uint32_t    qtySold;
-    float       price;
+    uint32_t    price;
 };
 
 #endif
