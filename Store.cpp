@@ -12,20 +12,19 @@ using namespace nlohmann;
 const char* _storeFile = "store.json";
 const char* _mutexName = "StoreFileMutex";
 
-#if 1 // TODO remove - pimpl not needed if we don't store a model between calls?
 struct Store::Impl
 {
     void                            fileToJson(void);
+    void                            jsonToFile(void) const;
     map<string, vector<Product>>    importByFamily(void);
     map<string, Product>            importById(void);
-    void                            persist(void) const;
+    void                            updateModel(const Product& updated);
 
     json jsonModel;
 };
 
 void Store::Impl::fileToJson(void)
 {
-    OSMutex mutex(_mutexName);
     ifstream i;
     std::ios_base::iostate exceptionMask = i.exceptions() | std::ios::failbit;
     i.exceptions(exceptionMask);
@@ -36,7 +35,6 @@ void Store::Impl::fileToJson(void)
     }
     catch(std::system_error& e)
     {
-        cerr << "file open failure" << endl;
         cerr << e.code().message() << endl;
         exit(1);
     }
@@ -44,10 +42,33 @@ void Store::Impl::fileToJson(void)
     i >> jsonModel;
 }
 
+void Store::Impl::jsonToFile(void) const
+{
+    ofstream o;
+    std::ios_base::iostate exceptionMask = o.exceptions() | std::ios::failbit;
+    o.exceptions(exceptionMask);
+
+    try
+    {
+        o.open(_storeFile);
+    }
+    catch(std::system_error& e)
+    {
+        cerr << e.code().message() << endl;
+        exit(1);
+    }
+
+    o << std::setw(4) << jsonModel << endl;
+}
+
 map<string, vector<Product>> Store::Impl::importByFamily(void)
 {
     map<string, vector<Product>> imported;
-    fileToJson();
+
+    {
+        OSMutex mutex(_mutexName);
+        fileToJson();
+    }
 
     for (const auto& record : jsonModel)
     {
@@ -63,7 +84,11 @@ map<string, vector<Product>> Store::Impl::importByFamily(void)
 map<string, Product> Store::Impl::importById(void)
 {
     map<string, Product> imported;
-    fileToJson();
+
+    {
+        OSMutex mutex(_mutexName);
+        fileToJson();
+    }
 
     for (const auto& record : jsonModel)
     {
@@ -76,7 +101,20 @@ map<string, Product> Store::Impl::importById(void)
 
     return imported;
 }
-#endif
+
+void Store::Impl::updateModel(const Product& updated)
+{
+    json j = updated;
+
+    for (auto& element : jsonModel)
+    {
+        if (element["id"] == j["id"])
+        {
+            element = j;
+            break;
+        }
+    }
+}
 
 
 Store::Store(void)
@@ -109,4 +147,31 @@ Product Store::getProductInfo(string productId)
     return imported[productId];
 }
 
+Store::Result Store::purchaseProduct(string productId)
+{
+    OSMutex mutex(_mutexName);
+
+    auto imported = _pimpl->importById();
+
+    auto product = imported[productId];
+
+    if (product.qtyAvail < 1)
+    {
+        return Store::RESULT_SOLD_OUT;
+    }
+
+    product.qtyAvail--;
+
+    _pimpl->updateModel(product);
+    _pimpl->jsonToFile();
+
+    return Store::RESULT_SUCCESS;
+}
+
+vector<Product> Store::getProductsInFamily(std::string family)
+{
+    auto imported = _pimpl->importByFamily();
+
+    return imported[family];
+}
 

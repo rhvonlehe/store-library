@@ -22,7 +22,7 @@ public:
     std::vector<std::string> getProductFamilies(void);
     Product getProductInfo(std::string productId);
     Result purchaseProduct(std::string productId);
-    std::vector<Product> getProducts(std::string family);
+    std::vector<Product> getProductsInFamily(std::string family);
 
 private:
 

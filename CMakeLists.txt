@@ -27,6 +27,7 @@ target_sources(store
     Store.cpp
     JsonConvertUtils.cpp
     OSMutex.cpp
+    Product.cpp
 )
 
 target_link_libraries(store
@@ -37,6 +38,6 @@ target_link_libraries(store
 # Slightly hacky.  A full-fledged library would likely have its own 'finder' file to
 # help a client use find_package() on it.
 set_target_properties(store
-PROPERTIES
-RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
