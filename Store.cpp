@@ -122,7 +122,8 @@ void Store::Impl::updateModel(const Product& updated)
 
 
 Store::Store(void)
-    : _pimpl(make_unique<Impl>())
+    : _receiptNumber(0),
+      _pimpl(make_unique<Impl>())
 {
     _customerId = this_thread::get_id();
 }
@@ -187,20 +188,34 @@ vector<Product> Store::getProductsInFamily(std::string family)
     return imported[family];
 }
 
-void Store::saveReceipt(const Product& product) const
+void Store::saveReceipt(const Product& product)
 {
-    stringstream ss;
+    ofstream o;
+    std::ios_base::iostate exceptionMask = o.exceptions() | std::ios::failbit;
+    o.exceptions(exceptionMask);
+
+    stringstream nowStr, customerStr;
+    customerStr << _customerId;
+    _receiptNumber++;
+    std::string receiptId = customerStr.str() + "-" + to_string(_receiptNumber);
+    std::string receiptName = "receipt-" + receiptId;
+
+    try
+    {
+        o.open(receiptName);
+    }
+    catch(std::system_error& e)
+    {
+        cerr << e.code().message() << endl;
+        exit(1);
+    }
+
     auto nowTimeT = chrono::system_clock::to_time_t(chrono::system_clock::now());
-
-    ss << put_time(localtime(&nowTimeT), "%Y-%m-%d-%X");
-    std::string nowStr = ss.str();
-    std::string receiptName = "receipt-" + product.id + '-' + nowStr;
-    ofstream o(receiptName);
-
+    nowStr << put_time(localtime(&nowTimeT), "%Y-%m-%d-%X");
     o << "Purchase made:" << endl;
     o << "by customer: " << _customerId << endl;
     o << product << endl;
-    o << "at time: " << nowStr << endl;
+    o << "at time: " << nowStr.str() << endl;
 }
 
 

@@ -26,9 +26,10 @@ public:
     std::vector<Product> getProductsInFamily(std::string family);
 
 private:
-    void saveReceipt(const Product& product) const;
+    void saveReceipt(const Product& product);
 
     std::thread::id _customerId;
+    uint32_t        _receiptNumber;
 
     struct Impl;  // PIMPL will prevent bleeding of json outside this class/lib
     std::unique_ptr<Impl>   _pimpl;
