@@ -1,5 +1,7 @@
 #include "JsonConvertUtils.h"
 
+namespace sl
+{
 using namespace nlohmann;
 
 void to_json(json& j, const Product& p)
@@ -17,4 +19,6 @@ void from_json(const json& j, Product& p)
     j.at("amountAvailable").get_to(p.qtyAvail);
     j.at("amountSold").get_to(p.qtySold);
     j.at("price").get_to(p.price);
+}
+
 }

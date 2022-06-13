@@ -7,6 +7,9 @@
 #include <memory>
 #include <thread>
 
+namespace sl
+{
+
 class Store
 {
 public:
@@ -35,5 +38,5 @@ private:
     std::unique_ptr<Impl>   _pimpl;
 };
 
-
+} // namespace sl
 #endif

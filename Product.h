@@ -4,6 +4,9 @@
 #include <string>
 #include <iostream>
 
+namespace sl
+{
+
 class Product
 {
 public:
@@ -19,5 +22,5 @@ public:
 
 std::ostream& operator<<(std::ostream& os, const Product& p);
 
-
+}
 #endif

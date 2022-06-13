@@ -1,6 +1,9 @@
 #include "Product.h"
 #include <iostream>
 
+namespace sl
+{
+
 using namespace std;
 
 void Product::print(void)
@@ -20,4 +23,6 @@ std::ostream& operator<<(std::ostream& os, const Product& p)
     os << "   price: " << p.price << endl;
     os << "}" << endl;
     return os;
+}
+
 }

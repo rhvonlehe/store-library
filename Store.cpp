@@ -10,6 +10,9 @@
 #include <iomanip>
 #include <process.h>
 
+namespace sl
+{
+
 using namespace std;
 using namespace nlohmann;
 
@@ -218,4 +221,5 @@ void Store::saveReceipt(const Product& product)
     o << "at time: " << nowStr.str() << endl;
 }
 
+} // namespace sl
 

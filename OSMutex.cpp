@@ -1,5 +1,8 @@
 #include "OSMutex.h"
 
+namespace sl
+{
+
 OSMutex::OSMutex(std::string name)
 {
     // Create or acquire named mutex
@@ -12,4 +15,6 @@ OSMutex::OSMutex(std::string name)
 OSMutex::~OSMutex(void)
 {
     ::ReleaseMutex(_osMutex);
+}
+
 }

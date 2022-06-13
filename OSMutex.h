@@ -5,6 +5,9 @@
 #include <windows.h>
 #include <string>
 
+namespace sl
+{
+
 // This guy is meant to give us RAII
 // Need an OS mutex because clients are separate processes
 // Basic C++ lock_guard<mutex> is only for threads
@@ -18,4 +21,5 @@ private:
     HANDLE _osMutex;
 };
 
+}
 #endif // OSMUTEX_H
